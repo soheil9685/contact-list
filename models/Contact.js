@@ -2,19 +2,30 @@ import {models , model , Schema} from "mongoose";
 
 const ContactSchema = new Schema({
     firstName: {
-        type: String
+        type: String,
+        required: true,
+        trim: true,
+        minLength: 3,
+        maxLength: 16
     },
     lastName: {
-        type: String
+        type: String,
+        required: true,
+        trim: true,
+        minLength: 3,
+        maxLength: 16
     },
     age: {
-        type: Number
+        type: Number,
+        required: true
     },
     gender: {
-        type: String
+        type: String,
+        required: true
     },
     phone: {
-        type: String
+        type: String,
+        required: true
     }
 })
 

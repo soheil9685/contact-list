@@ -5,16 +5,44 @@ export default async function handler(req, res) {
     // Connect to DB
     await connectDB();
 
-    let contacts = null;
-
     if (req.method == "GET") {
-        contacts = await Contact.find()
+        let contacts = null;
+        let { gender, key } = req.query;
+
+
+        if (gender && key) {
+            if (gender == "male" || gender == "female") {
+                contacts = await Contact.find({
+                    $and: [{ gender }, { $or: [{ firstName: key }, { lastName: key }] }]
+                })
+            } else {
+                contacts = await Contact.find({
+                    $or: [{ firstName: key }, { lastName: key }]
+                })
+            }
+        } else if (gender) {
+            if (gender == "male" || gender == "female") {
+                contacts = await Contact.find({ gender })
+            } else {
+                contacts = await Contact.find()
+            }
+        } else if (key) {
+            contacts = await Contact.find({
+                $or: [{ firstName: key }, { lastName: key }]
+            })
+        } else {
+            contacts = await Contact.find()
+        }
+
         res.status(200).json(contacts)
+
     } else if (req.method == "POST") {
         try {
             await Contact.create(req.body)
+            res.status(200).json({ message: "Contact added successfully" })
         } catch (error) {
-            res.json({ message : "Adding contact faild" })
+            res.json({ message: "Adding contact faild", error })
+            console.log(error)
         }
 
     }
