@@ -10,5 +10,12 @@ export default async function handler(req, res) {
     if (req.method == "GET") {
         contacts = await Contact.find()
         res.status(200).json(contacts)
+    } else if (req.method == "POST") {
+        try {
+            await Contact.create(req.body)
+        } catch (error) {
+            res.json({ message : "Adding contact faild" })
+        }
+
     }
 }
