@@ -17,15 +17,20 @@ const ContactSchema = new Schema({
     },
     age: {
         type: Number,
-        required: true
+        required: true,
+        minLength: 1,
+        maxLength: 3
     },
     gender: {
         type: String,
-        required: true
+        required: true,
+        enum: ["female" , "male"]
     },
     phone: {
         type: String,
-        required: true
+        required: true,
+        match : /09\d{9}/,
+        maxLength: 11
     }
 })
 
