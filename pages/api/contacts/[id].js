@@ -8,7 +8,6 @@ export default async function handler(req, res) {
 
     // Query
     const { id } = req.query;
-    console.log(id)
 
     // Validation
     let check = mongoose.isValidObjectId(id)
