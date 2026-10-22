@@ -1,7 +1,14 @@
 import HomeImg from "@/public/assets/images/Home background.jpg"
+import Aos from "aos";
+import { useEffect, useState } from "react";
 import { Typewriter } from 'react-simple-typewriter'
 
 export default function Home() {
+
+  useEffect(() => {
+    Aos.init()
+  }, [])
+
   return (
     <main style={{
       backgroundImage: `url("${HomeImg.src}")`,
@@ -9,9 +16,9 @@ export default function Home() {
       backgroundPosition: "center",
       backgroundRepeat: "no-repeat"
     }} className="h-screen flex flex-col items-center justify-center">
-      <h1 className="text-[#F1F5F9] inter text-7xl"> Manage your contacts </h1>
+      <h1 className="text-[#F1F5F9] inter text-7xl" data-aos="fade-up"> Manage your contacts </h1>
       <h2 className="text-[#F1F5F9] dancing text-5xl">
-        <Typewriter 
+        <Typewriter
           words={["easy & clear"]}
         />
       </h2>
