@@ -1,3 +1,4 @@
+import ContactBox from "@/Components/Contact/ContactBox";
 import Navbar from "@/Components/Navbar/Navbar";
 import Contact from "@/models/Contact";
 import connectDB from "@/uitls/connectDB";
@@ -5,10 +6,10 @@ import connectDB from "@/uitls/connectDB";
 export default function Contacts({ contacts }){
 
     return(
-        <section>
+        <section className="flex ">
             <Navbar />
-            <main className="bg-[#0F172A]">
-
+            <main className="">
+                <ContactBox />
             </main>
         </section>
     )
