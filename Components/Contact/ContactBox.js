@@ -2,7 +2,7 @@ import Image from "next/image"
 
 export default function ContactBox({firstName , lastName , gender , age , phone}) {
     return (
-        <div className="bg-[#111C30] p-4 rounded-lg overflow-hidden w-80 mt-3">
+        <div className="bg-[#111C30] p-4 rounded-lg overflow-hidden w-80 border-2 border-[#94A3B8]">
             <span className="flex items-center gap-2 mb-5">
                 <Image src="/assets/images/profile.png" width={30} height={30} />
                 <h2 className="text-[#818CF8] inter text-lg">

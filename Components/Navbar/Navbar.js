@@ -6,8 +6,8 @@ export default function Navbar() {
     const [isOpen, setIsOpen] = useState(false)
 
     return (
-        <nav className="m-3 sticky">
-            <div className={`bg-[#1E293B] h-200 p-3 rounded-lg ${isOpen ? "w-70" : "w-14"} duration-500`} onMouseEnter={() => setIsOpen(true)} onMouseLeave={() => setIsOpen(false)}>
+        <nav className="m-3 sticky w-70">
+            <div className={`bg-[#1E293B] h-200 p-3 rounded-lg ${isOpen ? "w-70" : "w-14 flex justify-center"} duration-500`} onMouseEnter={() => setIsOpen(true)} onMouseLeave={() => setIsOpen(false)}>
                 <div className="flex justify-between mb-7">
                     <h1 className={`inter text-[#F1F5F9] text-2xl ${isOpen ? " " : "hidden"}`}>Contact App</h1>
                 </div>
