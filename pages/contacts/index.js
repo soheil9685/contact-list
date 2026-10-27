@@ -34,7 +34,7 @@ export default function Contacts({ contactsList }) {
                         contacts.map((contact) => <ContactBox key={contact._id} {...contact} />)
                     }
                     {contacts.length == 0 &&
-                        <h2 className="py-2 px-5 bg-[#111C30] text-[#F1F5F9] border-2 border-[#263449] rounded-lg">No contact found...!</h2>
+                        <h2 className="col-span-4 justify-self-center py-2 px-5 bg-[#111C30] text-[#F1F5F9] border-2 border-[#263449] rounded-lg">No contact found...!</h2>
                     }
                 </div>
             </main>
