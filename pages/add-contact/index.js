@@ -1,4 +1,4 @@
-import { useState } from "react"
+import toast , {Toaster} from "react-hot-toast";
 
 export default function AddContact() {
 
@@ -10,19 +10,38 @@ export default function AddContact() {
         phone: ""
     }
 
-    function submitHandler(e){
+    async function submitHandler(e){
         e.preventDefault();
         
         let{firstName , lastName , age , phone} = data;
         if(!firstName || !lastName || !age || !phone){
-            console.log("fill all fields")
-        }else{
-            console.log("success")
+            return toast.error("Fill all fields!")
+        }
+
+        // First name validation
+        if(firstName.length < 3 || firstName.length > 15){
+            return toast.error("Length first name is invalid!")
+        }
+
+        // Last name validation
+        if(lastName.length < 3 || lastName.length > 15){
+            return toast.error("Length last name is invalid!")
+        }
+
+        // Age validation
+        if(age < 18 || age > 200){
+            return toast.error("Age is invalid!")
+        }
+
+        // Phone validation
+        if(phone.length > 11 || phone.match(/09\d{9}/)){
+            return toast.error("Phone is invalid!")
         }
     }
 
     return (
         <section className="w-full h-screen flex flex-col items-center pt-20">
+            <Toaster />
             <div className="bg-[#0F172A] px-10 py-10 rounded-2xl">
                 <h1 className="text-[#F1F5F9] text-4xl inter text-center mb-10">Add Contact</h1>
                 <form className="w-130 grid grid-cols-4 gap-3">
