@@ -1,4 +1,4 @@
-import { ContactRound, House, X } from "lucide-react";
+import { ContactRound, House, Plus, X } from "lucide-react";
 import { useState } from "react";
 
 export default function Navbar() {
@@ -25,6 +25,12 @@ export default function Navbar() {
                             Contacts
                         </span>
                         
+                    </a>
+                    <a className={`text-[#94A3B8] hover:text-[#F1F5F9] hover:text-shadow-lg/10 hover:text-shadow-[#F1F5F9] duration-300 inter text-md flex gap-2`} href="/add-contact">
+                        <Plus />
+                        <span className={`${isOpen ? " " : "hidden"}`}>
+                            Add Contact
+                        </span>
                     </a>
                 </div>
             </div>
