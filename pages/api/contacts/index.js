@@ -41,8 +41,7 @@ export default async function handler(req, res) {
             await Contact.create(req.body)
             res.status(200).json({ message: "Contact added successfully" })
         } catch (error) {
-            res.json({ message: "Something went wrong" })
-            console.log(error)
+            res.status(422).json({ message: "Something went wrong" })
         }
 
     }
