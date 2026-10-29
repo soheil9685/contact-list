@@ -1,17 +1,61 @@
+import Contact from "@/models/Contact";
+import connectDB from "@/uitls/connectDB";
 import { LoaderCircle } from "lucide-react";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { Toaster } from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 
-export default function EditContact() {
+export default function EditContact({ contact }) {
 
-    const [formData , setFormData] = useState({})
+    const [formData, setFormData] = useState(contact)
+    const [loading, setLoading] = useState(false)
 
-    const router = useRouter()
-    const {id} = router.query
+    async function submitEditHandler(e) {
 
-        
+        e.preventDefault()
 
+        let { firstName, lastName, age, phone } = formData;
+        if (!firstName || !lastName || !age || !phone) {
+            return toast.error("Fill all fields!")
+        }
+
+        // First name validation
+        if (firstName.length < 3 || firstName.length > 15) {
+            return toast.error("Length first name is invalid!")
+        }
+
+        // Last name validation
+        if (lastName.length < 3 || lastName.length > 15) {
+            return toast.error("Length last name is invalid!")
+        }
+
+        // Age validation
+        if (age < 18 || age > 200) {
+            return toast.error("Age is invalid!")
+        }
+
+        // Phone validation
+        if (phone.length > 11 || !phone.match(/09\d{9}/)) {
+            return toast.error("Phone is invalid!")
+        }
+
+        setLoading(true)
+        const res = await fetch(`/api/contacts/${contact._id}`, {
+            method: "PUT",
+            body: JSON.stringify(formData),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+        const data = await res.json()
+        if (res.status == 200) {
+            toast.success("Contact updated successfully")
+            window.location.replace("/contacts")
+        } else {
+            toast.error("Something went wrong")
+        }
+        setLoading(false)
+    }
 
     return (
         <section className="w-full h-screen flex flex-col items-center pt-20">
@@ -83,7 +127,7 @@ export default function EditContact() {
                         />
                     </div>
 
-                    <button onClick={submitHandler} className="col-span-4 border-2 border-[#94A3B8] text-[#F1F5F9] py-2 mt-4 rounded-2xl hover:text-[#0F172A] hover:bg-[#94A3B8] duration-300 flex justify-center gap-3">
+                    <button onClick={submitEditHandler} className="col-span-4 border-2 border-[#94A3B8] text-[#F1F5F9] py-2 mt-4 rounded-2xl hover:text-[#0F172A] hover:bg-[#94A3B8] duration-300 flex justify-center gap-3">
                         Update Contact
                         {
                             loading ? <LoaderCircle className="" /> : " "
@@ -93,4 +137,16 @@ export default function EditContact() {
             </div>
         </section>
     )
+}
+
+export async function getServerSideProps(context) {
+    const { id } = context.params
+    console.log(id)
+
+    await connectDB()
+    const contact = await Contact.findById(id).lean()
+
+    return {
+        props: { contact: JSON.parse(JSON.stringify(contact)) }
+    }
 }
