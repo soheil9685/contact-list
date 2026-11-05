@@ -18,6 +18,12 @@ export default async function handler(req, res) {
             return res.status(422).json({ message: "Fill all fields" })
         }
 
+        // Email validation
+        const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
+        if(!emailRegex.test(email)){
+            return res.status(422).json({message : "Email is not valid"})
+        }
+
         // Check if email exists
         const isUserExist = await User.findOne({ email })
         if (isUserExist) {
