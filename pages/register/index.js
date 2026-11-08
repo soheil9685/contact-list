@@ -2,14 +2,14 @@ import { LoaderCircle } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 
-export default function Login() {
+export default function Register() {
 
-    const [formData , setFormData] = useState({
-            firstName: "",
-            lastName: "",
-            email: "",
-            password: ""
-        });
+    const [formData, setFormData] = useState({
+        firstName: "",
+        lastName: "",
+        email: "",
+        password: ""
+    });
 
     return (
         <section className="h-screen flex justify-center">
@@ -20,6 +20,7 @@ export default function Login() {
                     <div>
                         <label className="block text-[#F1F5F9] mb-1">First Name:</label>
                         <input
+                            onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
                             className="border-2 border-[#94A3B8] text-lg text-[#F1F5F9] px-5 py-1 rounded-xl w-full"
                             type="text"
                             placeholder="First Name"
@@ -30,6 +31,7 @@ export default function Login() {
                     <div>
                         <label className="block text-[#F1F5F9] mb-1">Last Name:</label>
                         <input
+                            onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
                             className="border-2 border-[#94A3B8] text-lg text-[#F1F5F9] px-5 py-1 rounded-xl w-full"
                             type="text"
                             placeholder="Last Name"
@@ -40,6 +42,7 @@ export default function Login() {
                     <div>
                         <label className="block text-[#F1F5F9] mb-1">Email:</label>
                         <input
+                            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                             className="border-2 border-[#94A3B8] text-lg text-[#F1F5F9] px-5 py-1 rounded-xl w-full"
                             type="email"
                             placeholder="Email"
@@ -50,6 +53,7 @@ export default function Login() {
                     <div>
                         <label className="block text-[#F1F5F9] mb-1">Password:</label>
                         <input
+                            onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                             className="border-2 border-[#94A3B8] text-lg text-[#F1F5F9] px-5 py-1 rounded-xl w-full"
                             type="password"
                             placeholder="Password"
