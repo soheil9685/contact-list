@@ -1,10 +1,13 @@
 import { LoaderCircle } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 
 export default function Register() {
 
+    const router = useRouter()
+    const [isLoading, setIsLoading] = useState(false);
     const [formData, setFormData] = useState({
         firstName: "",
         lastName: "",
@@ -12,23 +15,25 @@ export default function Register() {
         password: ""
     });
 
-    async function registerHandler(event){
+    async function registerHandler(event) {
         event.preventDefault();
 
-        const res = await fetch("/api/auth/register" , {
+        setIsLoading(true);
+        const res = await fetch("/api/auth/register", {
             method: "POST",
             body: JSON.stringify(formData),
             headers: {
-                "Content-Type" : "application/json"
+                "Content-Type": "application/json"
             }
         })
-        const data = await res.json();
-        if(res.status == 201){
+        if (res.status == 201) {
             toast.success("Registered successfully!")
-        }else{
+        } else {
             toast.error(data.message)
         }
-        
+        setIsLoading(false)
+        router.replace("/login");
+
     }
 
     return (
@@ -81,7 +86,10 @@ export default function Register() {
                         />
                     </div>
                     <button onClick={registerHandler} className="col-span-4 border-2 border-[#94A3B8] text-[#F1F5F9] py-2 mt-4 rounded-2xl hover:text-[#0F172A] hover:bg-[#94A3B8] duration-300 flex justify-center gap-3">
-                        Register
+                        Register 
+                        {
+                            isLoading ? <LoaderCircle className="" /> : ""
+                        }
                     </button>
                     <div className="inter text-center">
                         <span className="text-[#F1F5F9] hover:text-[#]">Already registered? </span>
