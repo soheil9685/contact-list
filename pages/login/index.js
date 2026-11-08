@@ -5,7 +5,7 @@ export default function Login() {
     return (
         <section className="h-screen flex justify-center">
             <main>
-                <form className="bg-[#111C30] p-10 mt-40 rounded-2xl flex flex-col gap-3">
+                <form className="bg-[#111C30] p-10 mt-40 rounded-2xl flex flex-col gap-3 w-120">
                     <h1 className="text-4xl inter text-center text-[#F1F5F9]">Login Form</h1>
                     {/* Email */}
                     <div>
@@ -29,9 +29,9 @@ export default function Login() {
                     <Link href="/" className="col-span-4 border-2 border-[#94A3B8] text-[#F1F5F9] py-2 mt-4 rounded-2xl hover:text-[#0F172A] hover:bg-[#94A3B8] duration-300 flex justify-center gap-3">
                         Login
                     </Link>
-                    <div className="inter">
+                    <div className="inter text-center">
                         <span className="text-[#F1F5F9] hover:text-[#]">Not registered? </span>
-                        <Link href="/" className="text-[#94A3B8] hover:underline hover:text-[#F1F5F9] duration-300">
+                        <Link href="/register" className="text-[#94A3B8] hover:underline hover:text-[#F1F5F9] duration-300">
                             Create an account
                         </Link>
                     </div>
