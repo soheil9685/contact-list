@@ -1,7 +1,16 @@
 import { LoaderCircle } from "lucide-react";
 import Link from "next/link";
+import { useState } from "react";
 
 export default function Login() {
+
+    const [formData , setFormData] = useState({
+            firstName: "",
+            lastName: "",
+            email: "",
+            password: ""
+        });
+
     return (
         <section className="h-screen flex justify-center">
             <main>
