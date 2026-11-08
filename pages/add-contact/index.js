@@ -73,7 +73,7 @@ export default function AddContact() {
     return (
         <section className="w-full h-screen flex flex-col items-center pt-20">
             <Toaster />
-            <div className="bg-[#0F172A] px-10 py-10 rounded-2xl">
+            <div className="bg-[#0F172A] p-10 rounded-2xl">
                 <h1 className="text-[#F1F5F9] text-4xl inter text-center mb-10">Add Contact</h1>
                 <form className="w-130 grid grid-cols-4 gap-3">
                     {/* First Name */}
