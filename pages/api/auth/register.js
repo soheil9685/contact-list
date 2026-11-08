@@ -30,8 +30,8 @@ export default async function handler(req, res) {
             return res.status(409).json({ message: "There is an user with this email" })
         }
 
-        if (password.length < 8 && password.length > 25) {
-            return res.status(422).json({ message: "Password length is invalid" })
+        if (password.length < 8 || password.length > 25) {
+            return res.status(422).json({ message: "Password length must be between 8 and 25" })
         }
 
         // Hashed password
