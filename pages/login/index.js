@@ -1,5 +1,6 @@
 import { LoaderCircle } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 
@@ -10,6 +11,8 @@ export default function Login() {
         email: "",
         password: ""
     });
+
+    const router = useRouter();
 
     async function loginHandler(event){
         event.preventDefault();
@@ -24,10 +27,10 @@ export default function Login() {
         })
         const data = await res.json()
         setIsLoading(false)
-        console.log(data)
 
         if(res.status == 200){
             toast.success("Loged in successfully")
+            router.replace("/dashboard")
         }else{
             toast.error(data.message)
         }
