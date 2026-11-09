@@ -42,7 +42,7 @@ export default async function handler(req, res) {
             expiresIn: "10min"
         })
 
-        res.status(200).json({message : "Loged in successfully"})
+        res.status(200).json({message : "Loged in successfully" , token})
     } catch (error) {
         res.status(500).json({ message: "Server error" })
     }
