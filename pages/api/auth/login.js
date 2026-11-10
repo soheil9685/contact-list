@@ -2,6 +2,7 @@ import User from "@/models/User";
 import connectDB from "@/uitls/connectDB";
 import bcrypt from "bcrypt"
 const jwt = require("jsonwebtoken")
+import * as cookie from "cookie";
 
 export default async function handler(req, res) {
 
@@ -38,12 +39,26 @@ export default async function handler(req, res) {
         }
 
         // Generate a token
-        const token = jwt.sign({email : isUserExist.email , role: isUserExist.role} , process.env.JWT_SECRET , {
-            expiresIn: "10min"
+        const token = jwt.sign({ email: isUserExist.email, role: isUserExist.role }, process.env.JWT_SECRET, {
+            expiresIn: "7day"
         })
 
-        res.status(200).json({message : "Loged in successfully" , token})
+        // Set cookie
+        res.setHeader(
+            "Set-Cookie",
+            cookie.stringifySetCookie({
+                name: "token",
+                value: token,
+                httpOnly: true,
+                maxAge: 7 * 24 * 60 * 60,
+                sameSite: "strict",
+                path: "/"
+            })
+        )
+
+        res.status(200).json({ message: "Loged in successfully" })
     } catch (error) {
-        res.status(500).json({ message: "Server error" })
+        res.status(500).json({ message: "Server error" , error})
+        console.log(error)
     }
 }
