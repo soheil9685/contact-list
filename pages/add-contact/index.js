@@ -1,3 +1,4 @@
+import tokenValidation from "@/uitls/tokenValidation";
 import { LoaderCircle } from "lucide-react";
 import { useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
@@ -154,24 +155,14 @@ export default function AddContact() {
 
 export async function getServerSideProps(context) {
 
-    // Token in request header
-    const { token } = context.req.cookies
+    const payload = tokenValidation(context)
 
-    // Check if token exists
-    if (!token) {
+    if (!payload) {
         return {
             redirect: {
                 destination: "/login"
             }
         }
-    }
-
-    // Verify token
-    let tokenPayload = null;
-    try {
-        tokenPayload = verify(token, process.env.JWT_SECRET)
-    } catch (error) {
-        console.log(error)
     }
 
     return {

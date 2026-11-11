@@ -1,6 +1,7 @@
 import Navbar from "@/Components/Navbar/Navbar";
 import User from "@/models/User";
 import connectDB from "@/uitls/connectDB";
+import tokenValidation from "@/uitls/tokenValidation";
 import { verify } from "jsonwebtoken";
 
 export default function Dashboard({ user }) {
@@ -18,30 +19,20 @@ export default function Dashboard({ user }) {
 
 export async function getServerSideProps(context) {
 
-    // Token in request header
-    const { token } = context.req.cookies
+    const payload = tokenValidation(context);
 
-    // Check if token exists
-    if (!token) {
+    if(!payload){
         return {
-            redirect: {
-                destination: "/login"
+            redirect : {
+                destination : "/login"
             }
         }
-    }
-
-    // Verify token
-    let tokenPayload = null;
-    try {
-        tokenPayload = verify(token, process.env.JWT_SECRET)
-    } catch (error) {
-        console.log(error)
     }
 
     // Connect to DB
     await connectDB();
 
-    const user = await User.findOne({ email: tokenPayload.email }).select("firstName lastName role")
+    const user = await User.findOne({ email: payload.email }).select("firstName lastName role")
 
     return {
         props: {

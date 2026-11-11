@@ -2,6 +2,7 @@ import ContactBox from "@/Components/Contact/ContactBox";
 import Navbar from "@/Components/Navbar/Navbar";
 import Contact from "@/models/Contact";
 import connectDB from "@/uitls/connectDB";
+import tokenValidation from "@/uitls/tokenValidation";
 import { useState } from "react";
 
 export default function Contacts({ contactsList }) {
@@ -42,8 +43,19 @@ export default function Contacts({ contactsList }) {
     )
 }
 
-export async function getServerSideProps() {
+export async function getServerSideProps(context) {
 
+    const payload = tokenValidation(context)
+
+    if(!payload){
+        return {
+            redirect : {
+                destination : "/login"
+            }
+        }
+    }
+
+    // Connect to DB
     await connectDB();
     let contacts = await Contact.find().lean(); // Convert MongoDB object to js object
 
