@@ -42,7 +42,6 @@ export async function getServerSideProps(context) {
     await connectDB();
 
     const user = await User.findOne({ email: tokenPayload.email }).select("firstName lastName role")
-    console.log(user)
 
     return {
         props: {

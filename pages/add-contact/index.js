@@ -132,7 +132,7 @@ export default function AddContact() {
                     <div className="col-span-2">
                         <label className="block text-[#F1F5F9] mb-1">Phone Number:</label>
                         <input
-                            onChange={(e) => setFormData({...formData , phone : e.target.value})}
+                            onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                             className="border-2 border-[#94A3B8] text-lg text-[#F1F5F9] px-5 py-1 rounded-xl w-full"
                             type="text"
                             placeholder="Phone Number"
@@ -150,4 +150,31 @@ export default function AddContact() {
             </div>
         </section>
     )
+}
+
+export async function getServerSideProps(context) {
+
+    // Token in request header
+    const { token } = context.req.cookies
+
+    // Check if token exists
+    if (!token) {
+        return {
+            redirect: {
+                destination: "/login"
+            }
+        }
+    }
+
+    // Verify token
+    let tokenPayload = null;
+    try {
+        tokenPayload = verify(token, process.env.JWT_SECRET)
+    } catch (error) {
+        console.log(error)
+    }
+
+    return {
+        props: {}
+    }
 }
