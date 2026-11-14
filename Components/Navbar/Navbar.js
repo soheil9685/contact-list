@@ -1,10 +1,12 @@
-import { ContactRound, House, LayoutDashboard, LogIn, Plus, X } from "lucide-react";
+import { ContactRound, House, LayoutDashboard, LogIn, LogOut, Plus} from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 
-export default function Navbar() {
+export default function Navbar(isAuth , setIsAuth) {
 
     const [isOpen, setIsOpen] = useState(false)
+    console.log(isAuth)
+    
 
     return (
         <nav className="m-3 sticky w-70">
@@ -20,31 +22,58 @@ export default function Navbar() {
                             Home Page
                         </span>
                     </Link>
-                    <Link className={`text-[#94A3B8] hover:text-[#F1F5F9] hover:text-shadow-lg/10 hover:text-shadow-[#F1F5F9] duration-300 inter text-md flex gap-2`} href="/login">
-                        <LogIn />
-                        <span className={`${isOpen ? " " : "hidden"}`}>
-                            Login
-                        </span>
-                    </Link>
-                    <Link className={`text-[#94A3B8] hover:text-[#F1F5F9] hover:text-shadow-lg/10 hover:text-shadow-[#F1F5F9] duration-300 inter text-md flex gap-2`} href="/contacts">
-                        <ContactRound  />
-                        <span className={`${isOpen ? " " : "hidden"}`}>
-                            Contacts
-                        </span>
-                        
-                    </Link>
-                    <Link className={`text-[#94A3B8] hover:text-[#F1F5F9] hover:text-shadow-lg/10 hover:text-shadow-[#F1F5F9] duration-300 inter text-md flex gap-2`} href="/add-contact">
-                        <Plus />
-                        <span className={`${isOpen ? " " : "hidden"}`}>
-                            Add Contact
-                        </span>
-                    </Link>
-                    <Link className={`text-[#94A3B8] hover:text-[#F1F5F9] hover:text-shadow-lg/10 hover:text-shadow-[#F1F5F9] duration-300 inter text-md flex gap-2`} href="/dashboard">
-                        <LayoutDashboard />
-                        <span className={`${isOpen ? " " : "hidden"}`}>
-                            Dashboard
-                        </span>
-                    </Link>
+
+                    {
+                        isAuth ? (
+                            <Link className={`text-[#94A3B8] hover:text-[#F1F5F9] hover:text-shadow-lg/10 hover:text-shadow-[#F1F5F9] duration-300 inter text-md flex gap-2`} href="/login">
+                                <LogOut />
+                                <span className={`${isOpen ? " " : "hidden"}`}>
+                                    Logout
+                                </span>
+                            </Link>
+                        ) : (
+                            <Link className={`text-[#94A3B8] hover:text-[#F1F5F9] hover:text-shadow-lg/10 hover:text-shadow-[#F1F5F9] duration-300 inter text-md flex gap-2`} href="/login">
+                                <LogIn />
+                                <span className={`${isOpen ? " " : "hidden"}`}>
+                                    Login
+                                </span>
+                            </Link>
+                        )
+                    }
+
+                    {
+                        isAuth ? (
+                            <Link className={`text-[#94A3B8] hover:text-[#F1F5F9] hover:text-shadow-lg/10 hover:text-shadow-[#F1F5F9] duration-300 inter text-md flex gap-2`} href="/contacts">
+                                <ContactRound />
+                                <span className={`${isOpen ? " " : "hidden"}`}>
+                                    Contacts
+                                </span>
+
+                            </Link>
+                        ) : " "
+                    }
+                    {
+                        isAuth ? (
+                            <Link className={`text-[#94A3B8] hover:text-[#F1F5F9] hover:text-shadow-lg/10 hover:text-shadow-[#F1F5F9] duration-300 inter text-md flex gap-2`} href="/add-contact">
+                                <Plus />
+                                <span className={`${isOpen ? " " : "hidden"}`}>
+                                    Add Contact
+                                </span>
+                            </Link>
+                        ) : " "
+                    }
+
+                    {
+                        isAuth ? (
+                            <Link className={`text-[#94A3B8] hover:text-[#F1F5F9] hover:text-shadow-lg/10 hover:text-shadow-[#F1F5F9] duration-300 inter text-md flex gap-2`} href="/dashboard">
+                                <LayoutDashboard />
+                                <span className={`${isOpen ? " " : "hidden"}`}>
+                                    Dashboard
+                                </span>
+                            </Link>
+                        ) : " "
+                    }
+
                 </div>
             </div>
         </nav>

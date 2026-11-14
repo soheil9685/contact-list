@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 
-export default function Login() {
+export default function Login({setIsAuth}) {
 
     const [isLoading , setIsLoading] = useState(false)
     const [formData, setFormData] = useState({
@@ -30,6 +30,7 @@ export default function Login() {
 
         if(res.status == 200){
             toast.success("Loged in successfully")
+            setIsAuth(true)
             router.replace("/dashboard")
         }else{
             toast.error(data.message)
