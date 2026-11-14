@@ -8,6 +8,10 @@ A simple contact management application built with Next.js and MongoDB. It allow
 - Filter contacts by gender
 - Edit existing contacts
 - Delete contacts
+- Login
+- Logout
+- Authentication & authorization
+- JWT
 
 ## Tech Stack
 - Next Js
