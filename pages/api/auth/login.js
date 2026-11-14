@@ -1,5 +1,6 @@
 import User from "@/models/User";
 import connectDB from "@/uitls/connectDB";
+import tokenValidation from "@/uitls/tokenValidation";
 import bcrypt from "bcrypt"
 const jwt = require("jsonwebtoken")
 import * as cookie from "cookie";
@@ -60,5 +61,21 @@ export default async function handler(req, res) {
     } catch (error) {
         res.status(500).json({ message: "Server error" , error})
         console.log(error)
+    }
+}
+
+export async function getServerSideProps(context) {
+    const payload = tokenValidation(context);
+
+    if(payload){
+        return {
+            redirect: {
+                destination: "/dashboard"
+            }
+        }
+    }
+
+    return {
+        props : {}
     }
 }
