@@ -1,4 +1,5 @@
 import Contact from "@/models/Contact"
+import User from "@/models/User";
 import connectDB from "@/uitls/connectDB"
 
 export default async function handler(req, res) {
@@ -7,31 +8,32 @@ export default async function handler(req, res) {
 
     if (req.method == "GET") {      // ===== GET =====
         let contacts = null;
-        let { gender, key } = req.query;
+        let { gender, key , userId } = req.query;
 
 
         if (gender && key) {
             if (gender == "male" || gender == "female") {
                 contacts = await Contact.find({
-                    $and: [{ gender }, { $or: [{ firstName: key }, { lastName: key }] }]
-                })
+                    $and: [{ gender }, { $or: [{ firstName: key }, { lastName: key }] } , {userId}]
+                }).populate("userId" , "-password -role -__v")
             } else {
-                contacts = await Contact.find({
+                contacts = await Contact.find({ $and: [{
                     $or: [{ firstName: key }, { lastName: key }]
-                })
+                } , {userId}]}).populate("userId" , "-password -role -__v")
             }
         } else if (gender) {
             if (gender == "male" || gender == "female") {
-                contacts = await Contact.find({ gender })
+                contacts = await Contact.find({ $and: [{ gender } , {userId}]}).populate("userId" , "-password -role -__v")
             } else {
-                contacts = await Contact.find()
+                contacts = await Contact.find({userId}).populate("userId" , "-password -role -__v")
             }
         } else if (key) {
-            contacts = await Contact.find({
-                $or: [{ firstName: key }, { lastName: key }]
-            })
+            contacts = await Contact.find({ $and: [
+                {$or: [{ firstName: key }, { lastName: key }]},
+                {userId}
+            ]}).populate("userId" , "-password -role -__v")
         } else {
-            contacts = await Contact.find()
+            contacts = await Contact.find({userId}).populate("userId" , "-password -role -__v")
         }
 
         res.status(200).json(contacts)

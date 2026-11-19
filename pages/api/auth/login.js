@@ -40,7 +40,7 @@ export default async function handler(req, res) {
         }
 
         // Generate a token
-        const token = jwt.sign({ email: isUserExist.email, role: isUserExist.role }, process.env.JWT_SECRET, {
+        const token = jwt.sign({userId: isUserExist._id , email: isUserExist.email, role: isUserExist.role }, process.env.JWT_SECRET, {
             expiresIn: "7day"
         })
 

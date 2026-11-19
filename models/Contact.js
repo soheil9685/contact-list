@@ -1,4 +1,4 @@
-import {models , model , Schema} from "mongoose";
+import mongoose, {models , model , Schema} from "mongoose";
 
 const ContactSchema = new Schema({
     firstName: {
@@ -31,6 +31,11 @@ const ContactSchema = new Schema({
         required: true,
         match : /09\d{9}/,
         maxLength: 11
+    },
+    userId: {
+        type: mongoose.Types.ObjectId,
+        ref: "User",
+        required: true
     }
 })
 

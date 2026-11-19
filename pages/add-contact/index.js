@@ -3,7 +3,7 @@ import { LoaderCircle } from "lucide-react";
 import { useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 
-export default function AddContact() {
+export default function AddContact({userId}) {
 
     const [loading, setLoading] = useState(false)
 
@@ -12,7 +12,8 @@ export default function AddContact() {
         lastName: "",
         age: 0,
         gender: "male",
-        phone: ""
+        phone: "",
+        userId
     })
 
     async function submitHandler(e) {
@@ -166,6 +167,6 @@ export async function getServerSideProps(context) {
     }
 
     return {
-        props: {}
+        props: { userId : payload.userId}
     }
 }

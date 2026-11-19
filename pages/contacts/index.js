@@ -5,14 +5,14 @@ import connectDB from "@/uitls/connectDB";
 import tokenValidation from "@/uitls/tokenValidation";
 import { useState } from "react";
 
-export default function Contacts({ contactsList }) {
+export default function Contacts({ contactsList , userId }) {
 
     let [contacts, setContacts] = useState(contactsList)
     const [key, setKey] = useState("");
     const [gender, setGender] = useState("");
 
     async function searchHandler() {
-        const res = await fetch(`/api/contacts?key=${key}&gender=${gender}`)
+        const res = await fetch(`/api/contacts?key=${key}&gender=${gender}&userId=${userId}`)
         const data = await res.json()
         setContacts(data)
     }
@@ -57,10 +57,10 @@ export async function getServerSideProps(context) {
 
     // Connect to DB
     await connectDB();
-    let contacts = await Contact.find().lean(); // Convert MongoDB object to js object
+    let contacts = await Contact.find({userId : payload.userId}).lean(); // Convert MongoDB object to js object
 
     return {
-        props: { contactsList: JSON.parse(JSON.stringify(contacts)) }
+        props: { contactsList: JSON.parse(JSON.stringify(contacts)) , userId : JSON.parse(JSON.stringify(payload.userId)) }
     }
 
 }
